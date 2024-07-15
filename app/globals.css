@@ -1,3 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.anonymous-pro {
+    font-family: "Anonymous Pro", monospace;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.card__bg {
+    /* at 0% start with 0A0324 to 50% 210456 to 100% 0A0324 */
+    background: linear-gradient(315deg, #0A0324 0%, #210456 50%, #0A0324 100%);
+}
+
+/* change bg to transparent on mobile */
+@media (max-width: 768px) {
+    .card__bg {
+        background: transparent;
+    }
+}
