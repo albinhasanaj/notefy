@@ -5,17 +5,13 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copy package.json and package-lock.json before running npm install to leverage Docker caching
-COPY package.json ./
-COPY package-lock.json ./
+COPY package.json package-lock.json ./
 
 # Install any needed packages specified in package.json
 RUN npm install
 
 # Copy the rest of the application code
 COPY . .
-
-# Build the Next.js application
-RUN npm run build
 
 # Expose the port the app runs on
 EXPOSE 3000
