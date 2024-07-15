@@ -1,7 +1,7 @@
-# Use an official Node.js runtime as a parent image
+# Use the official Node.js 18 Alpine image as a base image
 FROM node:18-alpine
 
-# Set the working directory to /app
+# Set the working directory
 WORKDIR /app
 
 # Copy package.json and package-lock.json before running npm install to leverage Docker caching
@@ -12,6 +12,9 @@ RUN npm install
 
 # Copy the rest of the application code
 COPY . .
+
+# Generate Prisma Client
+RUN npx prisma generate
 
 # Expose the port the app runs on
 EXPOSE 3000
