@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// INSTRUCTIONS USER
+// USER HAS TO HAVE A UNIQUE ID (UUID)
+// USER HAS TO HAVE A UNIQUE USERNAME EVEN WITH GITHUB AND GOOGLE LOGIN
+// USER HAS TO HAVE A UNIQUE EMAIL EVEN WITH GITHUB AND GOOGLE LOGIN
+// IF USER SIGNS UP WITH GITHUB OR GOOGLE, AND THOSE EMAILS ARE ALREADY IN THE DATABASE, THEN THE USER IS NOT ALLOWED TO SIGN UP WITH GITHUB OR GOOGLE
+// USER HAS TO HAVE A PASSWORD, EXCEPT IF THEY SIGN UP WITH GITHUB OR GOOGLE
+model User {
+  id       String  @id @default(uuid())
+  // githubId String? instead of using a github id or google id to know if they signed up with github or google, we can just use a onclick and pass provider as a parameter from the button comoponent when fetching
+  // googleId String?
+  username String  @unique
+  email    String  @unique
+  password String?
+  // documents Document[]
+  // documentUsers DocumentUser[]
+}
+
+// INSTRUCTIONS DOCUMENTS
+// DOCUMENTS HAVE TO HAVE A UNIQUE ID (UUID)
+// DOCUMENTS HAVE TO HAVE AN OWNER ID (UUID) --> THIS IS THE USER ID
+// DOCUMENTS HAVE TO HAVE A PROJECT NAME (WHICH CAN CHANGE IF THEY RENAME IT)
+
+// INSTRUCTIONS DOCUMENT USERS
+// DOCUMENT USERS HAVE TO HAVE A UNIQUE ID (UUID)
+// DOCUMENT USERS HAVE TO HAVE A USERID TO SHOW WHO HAS ACCESS TO THE DOCUMENT
+// EACH USER HAS TO HAVE A ROLE ENUM(OWNER EDITOR VIEWER) TO SHOW WHAT THEY CAN DO WITH THE DOCUMENT
