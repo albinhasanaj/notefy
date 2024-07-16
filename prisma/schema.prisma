@@ -21,8 +21,8 @@ datasource db {
 // USER HAS TO HAVE A PASSWORD, EXCEPT IF THEY SIGN UP WITH GITHUB OR GOOGLE
 model User {
   id       String  @id @default(uuid())
-  // githubId String? instead of using a github id or google id to know if they signed up with github or google, we can just use a onclick and pass provider as a parameter from the button comoponent when fetching
-  // googleId String?
+  githubId String?
+  googleId String?
   username String  @unique
   email    String  @unique
   password String?
