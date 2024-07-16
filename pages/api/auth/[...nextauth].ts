@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google"
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "crypto";
+import { signToken } from "@/lib/auth/tokens";
 
 const prisma = new PrismaClient();
 
@@ -40,6 +41,9 @@ const authOptions: NextAuthOptions = {
             console.log("isLoggingIn", isLoggingIn);
 
             if (isLoggingIn) {
+                user.id = isLoggingIn.id;
+                user.name = isLoggingIn.username;
+                user.email = isLoggingIn.email;
                 return true;
             }
 
@@ -81,8 +85,29 @@ const authOptions: NextAuthOptions = {
                 }
             });
 
+            user.id = newUser.id;
+            user.name = newUser.username;
+            user.email = newUser.email;
 
-            return true;
+            return newUser ? true : false;
+        },
+        async jwt({ token, user }) {
+            // Add id to the token
+            if (user) {
+                token.id = user.id;
+                token.email = user.email;
+                token.name = user.name;
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            // Add id to the session
+            if (session.user) {
+                session.user.id = token.id as string;
+                session.user.email = token.email;
+                session.user.name = token.name;
+            }
+            return session;
         },
     }
 }

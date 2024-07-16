@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { randomUUID } from "crypto";
+import { signToken } from "@/lib/auth/tokens";
 
 const prisma = new PrismaClient();
 
@@ -55,6 +56,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!newUser) {
         return res.status(500).json({ message: 'An error occurred while creating the user' });
     }
+
+    const token = signToken({ userId, username, email });
+    res.setHeader('Set-Cookie', `auth-token=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000`); // 30 days
 
     return res.status(201).json({ message: 'User created successfully' });
 }
