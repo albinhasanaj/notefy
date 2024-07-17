@@ -1,13 +1,10 @@
 import React from 'react'
+import CreateDoc from './CreateDoc'
 
 const ControlPanel = () => {
     return (
         <div className='flex gap-10'>
-            <div className='flex flex-col items-center gap-3 hover:scale-105 transform duration-300 cursor-pointer active:scale-95'>
-                <div className='bg-white w-[130px] h-[165px] text-[5rem] items-center flex justify-center font-light '>+</div>
-                <p className='text-white text-xl'>Blank Document</p>
-            </div>
-
+            <CreateDoc />
             <div className='flex flex-col items-center gap-3 hover:scale-105 transform duration-300 cursor-pointer active:scale-95'>
                 <div className='bg-white w-[130px] h-[165px] items-center flex justify-center font-light select-none'>
                     <div className='bg-[#0A0324] rounded-[5px] w-[110px] h-[30px] text-white flex items-center justify-center'>Document ID</div>

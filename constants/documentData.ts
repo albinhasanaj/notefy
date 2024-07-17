@@ -9,7 +9,7 @@ export const documentData = [
 ]
 
 // Amount of documents to be displayed
-const sum = 13;
+const sum = 5000;
 
 // Generate document data
 for (let i = 1; i < sum; i++) {
